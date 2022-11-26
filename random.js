@@ -1,6 +1,6 @@
 // slime --> 4 , skeleton --> 3 ,
 function random_select() {
-    let randomMonster = 19;
+    let randomMonster = Math.floor(Math.random() * 20);
     let randomMap = Math.floor(Math.random() * 4);
     let monster
     let map
