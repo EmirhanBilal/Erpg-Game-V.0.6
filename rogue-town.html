@@ -48,9 +48,9 @@
       #character-level-class {
         background-color: darkred;
         color: rgb(185, 166, 166);
-        padding: 10px 10px;
+        padding: 5px 0;
         font-size: 25px;
-        width: 200px;
+        width: 230px;
       }
       #character-information {
         border: 8px solid #854e0e;
@@ -59,14 +59,7 @@
         width: 370px;
         height: 520px;
       }
-      .exp {
-        background-color: #fdff00;
-        color: rgb(15, 15, 15);
-        padding: 5px 10px;
-        font-size: 30px;
-        text-align: center;
-        font-weight: bold;
-      }
+
       .item-bar {
         display: inline-block;
         border: 5px solid rgb(27, 27, 27);
@@ -97,10 +90,12 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        position: relative;
       }
       span {
-        font-size: 25px;
+        font-size: 1rem;
         color: rgb(185, 166, 166);
+        text-transform: capitalize;
       }
       .item-img {
         width: 110px;
@@ -121,14 +116,21 @@
       </h1>
       <div id="rogue-town-container">
         <div class="position-left">
+          <div class="empty-exp-bar"></div>
+          <div class="empty-exp">
+            EXP:
+            <span class="expText" id="expHave"></span>
+            /
+            <span class="expText" id="expNeed">74</span>
+          </div>
           <div id="character-information">
             <div style="display: flex">
               <div class="name-level" id="character-name">Emiran</div>
               <div class="name-level" id="character-level-class">
-                <span id="level">Level 1</span>-ROGUE
+                <span id="level"></span>
               </div>
             </div>
-            <div class="exp">EXP</div>
+            <div class="exp" id="expBar"></div>
             <div style="display: flex; align-items: center">
               <img
                 src="Photos/small-img/coin-image.png"
@@ -188,7 +190,7 @@
             alt="Rogue"
           />
           <p id="player">Name: Emiran</p>
-          <p>Level: 1</p>
+          <p id="levelP">Level: 1</p>
         </div>
       </div>
       <div id="chapters" style="display: none">

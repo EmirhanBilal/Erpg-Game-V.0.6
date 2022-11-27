@@ -188,7 +188,7 @@
             <button
               type="submit"
               id="afterVictory-back-btn"
-              onclick="item_pickup()"
+              onclick="item_pickup();level_calculate()"
               class="btn btn-success mx-5 pt-3 pb-3 fs-3 fw-bold"
               style="border: 3px solid black; padding: 10px 20px; width: 200px"
             >
@@ -228,8 +228,14 @@
               <div
                 class="champion-health"
                 id="championHealth"
-                style="color: black"
-              ></div>
+                style="color: black; text-align: center; align-items: start"
+              >
+                <span
+                  id="championHealthLeft"
+                  style="font-size: 1rem; color: black; font-weight: 900"
+                  >260</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -280,8 +286,14 @@
               <div
                 class="monster-health"
                 id="monsterHealth"
-                style="color: black"
-              ></div>
+                style="color: black; text-align: center; align-items: start"
+              >
+                <span
+                  id="monsterHealthLeft"
+                  style="font-size: 1rem; color: black; font-weight: 900"
+                  >260</span
+                >
+              </div>
             </div>
           </div>
         </div>
@@ -295,13 +307,14 @@
       let stopAttackGo;
       let stopMonsterAttackBack;
       let stopMonsterAttackGo;
+      let championLevel = Number(sessionStorage.getItem("championLevel"));
       let level = Number(sessionStorage.getItem("level")) - 1;
       let forNextLevel = 1;
       let championDamage;
       let monsterDamage;
       let monsterTypeDamage;
-      let monsterHP = 260;
       let monsterExp;
+      let monsterHP = 260;
       let championHP = 260;
       let swordVoice = document.getElementById("sword");
       let monsterName = sessionStorage.getItem("monsterName");
@@ -323,7 +336,12 @@
           championİmage.style.left = i + "px";
         }
         if (i === 480) {
-          championDamage = Math.floor(Math.random() * (70 - 40 + 1)) + 40;
+          championDamage =
+            Math.floor(
+              Math.random() *
+                (70 * championLevel - 40 * (championLevel / 2 + 1) + 1)
+            ) +
+            40 * (championLevel / 2 + 1);
           championDamageDisplay.innerHTML = championDamage;
           attack_voice();
           display_attack_effect_and_damage();
@@ -331,9 +349,11 @@
             monsterHealth.style.width = 0 + "px";
             monsterHealth.style.background = "white";
             monsterHealth.style.border = "none";
+            monsterHealthLeft.innerHTML = "";
           } else {
             monsterHP -= championDamage;
             monsterHealth.style.width = monsterHP + "px";
+            monsterHealthLeft.innerHTML = monsterHP;
           }
           stopAttackBack = setInterval(attackBack, 2);
           clearInterval(stopAttackGo);
@@ -373,9 +393,11 @@
             championHealth.style.width = 0 + "px";
             championHealth.style.background = "white";
             championHealth.style.border = "none";
+            championHealthLeft.innerHTML = "";
           } else {
             championHP -= monsterDamage;
             championHealth.style.width = championHP + "px";
+            championHealthLeft.innerHTML = championHP;
           }
 
           stopMonsterAttackBack = setInterval(monsterAttackBack, 2);
@@ -412,14 +434,14 @@
       function wictory() {
         closePage();
         expGain.innerHTML =
-          Math.floor(Math.random() * (monsterExp - 30 * (level / 2) + 1)) +
-          30 * level;
+          Math.floor(Math.random() * (monsterExp - 30 * (level / 3) + 1)) +
+          30 * (level / 3);
         // exp gain system ⬆
         coinLoot.innerHTML =
           Math.floor(
-            Math.random() * (monsterTypeDamage - 30 * (level / 2) + 1)
+            Math.random() * (monsterTypeDamage - 30 * (level / 3) + 1)
           ) +
-          30 * level;
+          30 * (level / 3);
         // coin gain system ⬆
         monsterDefeat.style.display = "inline-block";
         forNextLevel++;
@@ -471,5 +493,6 @@
     </script>
     <script src="asd.js"></script>
     <script src="monster-map-selector.js"></script>
+    <script src="exp-level.js"></script>
   </body>
 </html>

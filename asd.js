@@ -2,25 +2,26 @@ let name_character;
 let specCharacter;
 let slimeSword;
 let totalCoin;
+let totalExp;
 let addCoin;
 function send_name() {
     name_character = sessionStorage.setItem("name", document.getElementById('character-name').innerHTML);
-    sessionStorage.setItem("characterLevel", document.getElementById('level').innerHTML);
 }
 
 function paste_name() {
     document.getElementById('champion-name').innerHTML = sessionStorage.getItem("name");
-    document.getElementById('area-level').innerHTML = sessionStorage.getItem("characterLevel");
+    document.getElementById('area-level').innerHTML = "Level "+sessionStorage.getItem("championLevel")
 }
 
 function paste_town_name() {
 document.getElementById('character-name').innerHTML = sessionStorage.getItem("nameback");
 document.getElementById('player').innerHTML ="Name: " + sessionStorage.getItem("nameback");
 
-
-totalCoin = sessionStorage.getItem("totalCoin")
-console.log(sessionStorage.getItem("totalCoin"))
-document.getElementById('coin').innerHTML = totalCoin;
+levelP.innerHTML = "Level: "+sessionStorage.getItem("championLevel")
+level.innerHTML ="Level "+sessionStorage.getItem("championLevel") + " " + sessionStorage.getItem("specCharacter")
+document.getElementById('coin').innerHTML = sessionStorage.getItem("totalCoin");
+expHave.innerHTML = sessionStorage.getItem("totalExp");
+expBar.style.width = (Number(sessionStorage.getItem("totalExp")) * 5) + "px";
 }
 
 function character_spec() {
@@ -63,6 +64,9 @@ function load_for_spec(){
         document.getElementById('back-after-victory').action= "mage-town.html"
     }
 }
+function champion_default_level() {
+    sessionStorage.setItem("championLevel", 1)
+}
 function item_pickup() {
     const itemSelect = document.getElementById("itemImage").getAttribute("src");
 
@@ -73,9 +77,16 @@ function item_pickup() {
     if (sessionStorage.getItem("totalCoin") === null) {
         sessionStorage.setItem("totalCoin",0)
     }
+    if (sessionStorage.getItem("totalExp") === null) {
+        sessionStorage.setItem("totalExp",0)
+    }
     totalCoin = document.getElementById('coinLoot').innerHTML - "";
     totalCoin += sessionStorage.getItem("totalCoin") - "";
     sessionStorage.setItem("totalCoin",totalCoin)
+    totalExp = Number(expGain.innerHTML);
+    totalExp += Number(sessionStorage.getItem("totalExp"))
+    sessionStorage.setItem("totalExp",totalExp)
+    
 }
 function reset_coins() {
     sessionStorage.setItem("totalCoin",0)
